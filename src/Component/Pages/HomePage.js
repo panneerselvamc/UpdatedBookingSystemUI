@@ -1,19 +1,20 @@
 import { CardGroup, Button } from "react-bootstrap";
-import Header from "./Component/Header";
+import Header from "../../Component/Header";
 import React, { Component } from "react";
 import "rc-datepicker/lib/style.css";
-import PassengerCount from "./Component/Modal/PassengerCount";
-import "./CSS/App.css";
-import DateSelector from "./Component/Modal/DateSelector";
-import OfferCard from "./Component/Cards/OfferCard";
-import SourceCard from "./Component/Cards/SourceCard";
-import DestinationCard from "./Component/Cards/DestinationCard";
-import DepartureDateCard from "./Component/Cards/DepartureDateCard";
-import ReturnDateCard from "./Component/Cards/ReturnDateCard";
-import PassengerCountCard from "./Component/Cards/PassengerCountCard";
-import axios from "axios";
-class App extends Component {
+import PassengerCount from "../../Component/Modal/PassengerCount";
+import "../../CSS/App.css";
 
+import DateSelector from "../../Component/Modal/DateSelector";
+import OfferCard from "../../Component/Cards/OfferCard";
+import SourceCard from "../../Component/Cards/SourceCard";
+import DestinationCard from "../../Component/Cards/DestinationCard";
+
+import DepartureDateCard from "../../Component/Cards/DepartureDateCard";
+import ReturnDateCard from "../../Component/Cards/ReturnDateCard";
+import PassengerCountCard from "../../Component/Cards/PassengerCountCard";
+import axios from "axios";
+export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,18 +38,15 @@ class App extends Component {
         "Lakshadweep",
         "Mizoram"
       ],
-      from: "Bangalore",
+      from: "chennai",
       to: "Delhi",
       returnDate: null,
-      departureDate: "2019-09-23",
+      departureDate: "2019-09-24",
       adult: 1,
       children: 0,
       infant: 0,
-      class:null
+      class: null
     };
-
-
-     
   }
   setDepatureDate = date => {
     this.setState({
@@ -98,16 +96,15 @@ class App extends Component {
     });
   };
 
-  setClass=value=>{
+  setClass = value => {
     this.setState({
-      class:value
-    })
-  }
+      class: value
+    });
+  };
   setAdultCount = value => {
-   this.setState({
+    this.setState({
       adult: value
     });
- 
   };
   setChildrenCount = value => {
     this.setState({
@@ -120,28 +117,10 @@ class App extends Component {
     });
   };
 
-  searchFlightAPI=()=>{
-    const userdata = JSON.stringify({
-      sourceAddress: this.state.from,
-      destination: this.state.to,
-      dateOfTravel: this.state.departureDate,
-      // " transportClass": this.state.transportClass,
-      // transportType: this.state.transportType
-      
-    });
+  searchFlightAPI = () => {
+    this.props.setData(this.state);
 
-    // axios
-    //     .post("http://localhost:8880/searchforflight", userdata, {
-    //       headers: { "Content-Type": "application/json" }
-    //     })
-
-    //     .then(res => {
-    //       console.log(res.data)
-    //     });
-  }
-
-
-  
+  };
 
   errorMessage = () => {
     if (this.state.adult < 1) {
@@ -264,8 +243,7 @@ class App extends Component {
                       isTravellersAndEconomy: false
                     });
                   }}
-
-                  setClass={(value)=>this.setClass(value)}
+                  setClass={value => this.setClass(value)}
                 />
               ) : null}
             </div>
@@ -307,5 +285,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
